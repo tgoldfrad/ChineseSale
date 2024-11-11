@@ -17,47 +17,52 @@ namespace ChineseSale.Controllers
         public ActionResult<List<Products>> Get()
         {
             List<Products> res = productsServer.GetProducts();
-            return Ok(res);
+            return res;
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         public ActionResult<Products> Get(int id)
         {
+            if (id <= 0)
+                return BadRequest();
             Products p = productsServer.GetProductsById(id);
             if(p == null)
                 return NotFound();
-            return Ok(p);
+            return p;
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Products product)
+        public ActionResult<bool> Post([FromBody] Products product)
         {
-            productsServer.PostProducts(product);
-            return Ok();
+
+            productsServer.AddProducts(product);
+            return true;
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Products product)
+        public ActionResult<bool> Put(int id, [FromBody] Products product)
         {
-            bool f = productsServer.PutProducts(id, product);
+            if (id <= 0)
+                return BadRequest();
+            bool f = productsServer.UpdateProducts(id, product);
             if(f)
             {
-                return Ok();
+                return true;
             }
             return NotFound();
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool f = productsServer.DeleteProducts(id);
             if (f)
             {
-                return Ok();
+                return true;
             }
             return NotFound();
 

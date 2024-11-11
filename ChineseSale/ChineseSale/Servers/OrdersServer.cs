@@ -4,29 +4,29 @@ namespace ChineseSale.Servers
 {
     public class OrdersServer
     {
-        public List<Orders> orders=new List<Orders>()
-        {
-            new Orders(){OrderId=1,DonorId=1,OrderDate=new DateTime(12,09,2024),OrderFinalPayment=300,IsTaxReceipt=false,NameReceipt="",PaymentIsOrdered=true,Remarks="OK"}
-        };
+        //public List<Orders> orders=new List<Orders>()
+        //{
+        //    new Orders(){OrderId=1,DonorId=1,OrderDate=new DateTime(12,09,2024),OrderFinalPayment=300,IsTaxReceipt=false,NameReceipt="",PaymentIsOrdered=true,Remarks="OK"}
+        //};
         public List<Orders> GetOrders()
         {
-            return orders;
+            return DataContextManager.DataContext.OrdersList;
         }
         public Orders GetOrdersById(int id)
         {
-            return orders.Find(x => x.OrderId == id);
+            return DataContextManager.DataContext.OrdersList.Find(x => x.OrderId == id);
         }
-        public bool PostOrders(Orders order)
+        public bool AddOrders(Orders order)
         {
-            orders.Add(order);
+            DataContextManager.DataContext.OrdersList.Add(order);
             return true;
         }
-        public bool PutOrders(int id,Orders order)
+        public bool UpdateOrders(int id,Orders order)
         {
-            int index = orders.FindIndex(x => x.OrderId == id);
+            int index = DataContextManager.DataContext.OrdersList.FindIndex(x => x.OrderId == id);
             if(index != -1)
             {
-                orders[index]=order;
+                DataContextManager.DataContext.OrdersList[index]=order;
                 return true;
             }
             return false;
@@ -34,10 +34,10 @@ namespace ChineseSale.Servers
         }
         public bool DeleteOrders(int id)
         {
-            Orders order=orders.Find(x => x.OrderId == id);
+            Orders order=GetOrdersById(id);
             if(order!=null)
             {
-                orders.Remove(order);
+                DataContextManager.DataContext.OrdersList.Remove(order);
                 return true;
             }
             return false;

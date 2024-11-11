@@ -16,44 +16,48 @@ namespace ChineseSale.Controllers
         public ActionResult<List<Cities>> Get()
         {
             List<Cities> res=citiesServer.GetCities();
-            return Ok(res);
+            return res;
         }
 
         // GET api/<CitiesController>/5
         [HttpGet("{id}")]
         public ActionResult<Cities> Get(int id)
         {
+            if (id <= 0)
+                return BadRequest();
             Cities city =citiesServer.GetCitiesById(id);
             if(city != null)
-                return Ok(city);
+                return city;
             return NotFound();
         }
 
         // POST api/<CitiesController>
         [HttpPost]
-        public ActionResult Post([FromBody] Cities city)
+        public ActionResult<bool> Post([FromBody] Cities city)
         {
-            citiesServer.PostCities(city);
-            return Ok();
+            citiesServer.AddCities(city);
+            return true;
         }
 
         // PUT api/<CitiesController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Cities city)
+        public ActionResult<bool> Put(int id, [FromBody] Cities city)
         {
-            bool f = citiesServer.PutCities(id, city);
+            if (id <= 0)
+                return BadRequest();
+            bool f = citiesServer.UpdateCities(id, city);
             if (f)
-                return Ok();
+                return true;
             return NotFound();
         }
 
         // DELETE api/<CitiesController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool f = citiesServer.DeleteCities(id);
             if (f)
-                return Ok();
+                return true;
             return NotFound();
         }
     }

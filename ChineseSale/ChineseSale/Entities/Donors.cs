@@ -8,6 +8,6 @@
         public string DonorAdress { get; set; }
         public int DonorCity { get; set; }
         public string DonorTelephone { get; set; }
-        public string DonorCellular { get; set; }
+        public string DonorPhone { get; set; }
     }
 }

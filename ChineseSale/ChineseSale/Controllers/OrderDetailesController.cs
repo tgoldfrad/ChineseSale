@@ -17,44 +17,48 @@ namespace ChineseSale.Controllers
         public ActionResult<List<OrderDetailes>> Get()
         {
             List<OrderDetailes> res = orderDetailesServer.GetOrderDetailes();
-            return Ok(res);
+            return res;
         }
 
         // GET api/<OrderDetailesController>/5
         [HttpGet("{id}")]
         public ActionResult<OrderDetailes> Get(int id)
         {
+            if (id <= 0)
+                return BadRequest();
             OrderDetailes o = orderDetailesServer.GetOrderDetailesById(id);
             if(o != null)
-                return Ok(o);
+                return o;
             return NotFound();
         }
 
         // POST api/<OrderDetailesController>
         [HttpPost]
-        public ActionResult Post([FromBody] OrderDetailes orderDetailes)
+        public ActionResult<bool> Post([FromBody] OrderDetailes orderDetailes)
         {
-            orderDetailesServer.PostOrderDetailes(orderDetailes);
-            return Ok();
+            orderDetailesServer.AddOrderDetailes(orderDetailes);
+            return true;
         }
 
         // PUT api/<OrderDetailesController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] OrderDetailes orderDetailes)
+        public ActionResult<bool> Put(int id, [FromBody] OrderDetailes orderDetailes)
         {
-            bool f = orderDetailesServer.PutOrderDetailes(id, orderDetailes);
+            if (id <= 0)
+                return BadRequest();
+            bool f = orderDetailesServer.UpdateOrderDetailes(id, orderDetailes);
             if (f)
-                return Ok();
+                return true;
             return NotFound();
         }
 
         // DELETE api/<OrderDetailesController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool f = orderDetailesServer.DeleteOrderDetailes(id);
             if (f)
-                return Ok();
+                return true;
             return NotFound();
         }
     }

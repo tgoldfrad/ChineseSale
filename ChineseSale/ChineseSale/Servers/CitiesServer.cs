@@ -4,41 +4,41 @@ namespace ChineseSale.Servers
 {
     public class CitiesServer
     {
-        public List<Cities> cities=new List<Cities>()
-        {
-            new Cities(){CityId=1,CityName="Yerushalaim"},
-            new Cities(){CityId=2,CityName="Bnei Brak"},
-            new Cities(){CityId=3,CityName="Beit Shemesh"}
-        };
+        //public List<Cities> cities=new List<Cities>()
+        //{
+        //    new Cities(){CityId=1,CityName="Yerushalaim"},
+        //    new Cities(){CityId=2,CityName="Bnei Brak"},
+        //    new Cities(){CityId=3,CityName="Beit Shemesh"}
+        //};
         public List<Cities> GetCities()
         {
-            return cities;
+            return DataContextManager.DataContext.CitiesList;
         }
         public Cities GetCitiesById(int id)
         {
-            return cities.Find(x => x.CityId == id);
+            return DataContextManager.DataContext.CitiesList.Find(x => x.CityId == id);
         }
-        public bool PostCities(Cities city)
+        public bool AddCities(Cities city)
         {
-            cities.Add(city);
+            DataContextManager.DataContext.CitiesList.Add(city);
             return true;
         }
-        public bool PutCities(int id,Cities city)
+        public bool UpdateCities(int id,Cities city)
         {
-            int index = cities.FindIndex(x => x.CityId == id);
+            int index = DataContextManager.DataContext.CitiesList.FindIndex(x => x.CityId == id);
             if (index != -1)
             {
-                cities[index] = city;
+                DataContextManager.DataContext.CitiesList[index] = city;
                 return true;
             }
             return false;
         }
         public bool DeleteCities(int id)
         {
-            Cities city = cities.Find(x => x.CityId == id);
+            Cities city = GetCitiesById(id);
             if(city != null)
             {
-                cities.Remove(city);
+                DataContextManager.DataContext.CitiesList.Remove(city);
                 return true;
             }
             return false;
