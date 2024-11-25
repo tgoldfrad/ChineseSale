@@ -11,12 +11,17 @@ namespace ChineseSale.Controllers
     [ApiController]
     public class DonorsController : ControllerBase
     {
-        static readonly DonorsServer donorsServer = new DonorsServer();
+        readonly DonorsServer _donorsServer ;
+        public DonorsController(DonorsServer donorsServer)
+        {
+            _donorsServer = donorsServer;
+        }
+
         // GET: api/<DonorsController>
         [HttpGet]
         public ActionResult<List<Donors>> Get()
         {
-            List<Donors> res = donorsServer.GetDonors();
+            List<Donors> res = _donorsServer.GetDonors();
             return res;
         }
 
@@ -26,7 +31,7 @@ namespace ChineseSale.Controllers
         {
             if (id <= 0)
                 return BadRequest();
-            Donors donor = donorsServer.GetDonorsById(id);
+            Donors donor = _donorsServer.GetDonorsById(id);
             if(donor==null)
             {
                 return NotFound();
@@ -38,7 +43,7 @@ namespace ChineseSale.Controllers
         [HttpPost]
         public ActionResult<bool> Post([FromBody] Donors d)
         {
-           if(donorsServer.AddDonors(d))
+           if(_donorsServer.AddDonors(d))
                 return true;
            return BadRequest();
         }
@@ -49,7 +54,7 @@ namespace ChineseSale.Controllers
         {
             if (id <= 0)
                 return BadRequest();
-            bool f=donorsServer.UpdateDonors(id, d);
+            bool f=_donorsServer.UpdateDonors(id, d);
             if(f)
             {
                 return true;
@@ -63,7 +68,7 @@ namespace ChineseSale.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool f = donorsServer.DeleteDonors(id);
+            bool f = _donorsServer.DeleteDonors(id);
             if (f)
             {
                 return true;
