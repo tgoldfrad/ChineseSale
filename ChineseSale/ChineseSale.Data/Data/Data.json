@@ -1,0 +1,29 @@
+[
+  {
+    "DonorId": 1,
+    "DonorFirstName": "Tamar",
+    "DonorLastName": "Levi",
+    "DonorAdress": "Bloi",
+    "DonorCity": 3,
+    "DonorTelephone": "03-5703050",
+    "DonorPhone": "0504177668"
+  },
+  {
+    "DonorId": 2,
+    "DonorFirstName": "Sara",
+    "DonorLastName": "Levi",
+    "DonorAdress": "Sokolov",
+    "DonorCity": 3,
+    "DonorTelephone": "03-5789999",
+    "DonorPhone": "0504180808"
+  },
+  {
+    "DonorId": 4,
+    "DonorFirstName": "wdw",
+    "DonorLastName": "string",
+    "DonorAdress": "string",
+    "DonorCity": 4,
+    "DonorTelephone": "23423",
+    "DonorPhone": "0527122222"
+  }
+]
